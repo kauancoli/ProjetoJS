@@ -1,12 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Informações da Imagem</title>
+  </head>
+  <body>
+    <h1>Informações da Imagem</h1>
+
+    <h2>Autor: <span id="author"></span></h2>
+
+    <img id="image" src="" alt="Imagem" width="680" height="480" />
+
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const imageUrl = decodeURIComponent(urlParams.get("url"));
+      const authorName = decodeURIComponent(urlParams.get("author"));
+
+      const imageElement = document.getElementById("image");
+      imageElement.src = imageUrl;
+      const authorElement = document.getElementById("author");
+      authorElement.textContent = authorName;
+    </script>
+  </body>
 </html>

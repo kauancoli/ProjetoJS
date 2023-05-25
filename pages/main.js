@@ -1,31 +1,43 @@
-//Faça uma requisição GET para a API e obtenha um array de objetos contendo os detalhes de cada imagem (URL da imagem, título, descrição, etc.).
-//$.ajax({
- //   url: 'URL_DA_API',
- //   method: 'GET',
-  //  success: function(response) {
-      // Manipule a resposta da API aqui
-  //  },
-   // error: function(error) {
-   //   console.log(error);
-  //  }
-  //});
+let xhr = new XMLHttpRequest();
 
+let pageRandom = Math.floor(Math.random() * 99) + 1;
 
+xhr.open("GET", `https://picsum.photos/v2/list?page=${pageRandom}&limit=9`);
 
-// Itere sobre o array de objetos e, para cada imagem, crie um elemento <div> com a classe col-md-4 (ou outra classe de coluna apropriada) para representar uma coluna da grade.
-  //success: function(response) {
-    //var imageGrid = $('#image-grid');
-  
-    //response.forEach(function(image) {
-      //var imageBlock = $('<div class="col-md-4"></div>');
-      //var imageElement = $('<img class="img-fluid" src="' + image.url + '" alt="' + image.title + '">');
-      //var titleElement = $('<h4>' + image.title + '</h4>');
-      //var descriptionElement = $('<p>' + image.description + '</p>');
-  
-      //imageBlock.append(imageElement);
-      //imageBlock.append(titleElement);
-      //imageBlock.append(descriptionElement);
-  
-      //imageGrid.append(imageBlock);
-    //});
-  //};
+xhr.onload = function () {
+  if ((xhr.status = 200)) {
+    let response = JSON.parse(xhr.responseText);
+
+    let imageGrid = document.getElementById("image-grid");
+
+    for (let i = 0; i < response.length; i++) {
+      let imageBlock = document.createElement("div");
+      imageBlock.className = "col-md-4";
+
+      let imageElement = document.createElement("img");
+      imageElement.className = "img-fluid";
+      imageElement.src = response[i].download_url;
+      imageElement.alt = response[i].author;
+      imageElement.id = response[i].id;
+
+      let titleElement = document.createElement("h4");
+      titleElement.textContent = response[i].author;
+
+      imageBlock.appendChild(imageElement).onclick = function () {
+        const imageUrl = response[i].download_url;
+        const authorName = response[i].author;
+
+        const encodedUrl = encodeURIComponent(imageUrl);
+        const encodedAuthor = encodeURIComponent(authorName);
+
+        window.location.href = `page2.html?url=${encodedUrl}&author=${encodedAuthor}`;
+      };
+      imageBlock.appendChild(titleElement);
+      imageGrid.appendChild(imageBlock);
+    }
+  } else {
+    console.error("A requisição não pôde ser concluída.");
+  }
+};
+
+xhr.send();

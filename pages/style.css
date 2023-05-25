@@ -1,8 +1,17 @@
 #image-grid .col-md-4 {
-    margin-bottom: 20px;
-  }
-  
-  #image-grid img {
-    width: 100%;
-    height: auto;
-  }
+  margin-bottom: 20px;
+}
+
+#image-grid img {
+  width: 100%;
+  height: auto;
+
+  cursor: pointer;
+}
+
+#image-grid img:hover {
+  transform: scale(1.01);
+  transition: all 0.1s ease-in-out;
+
+  opacity: 0.9;
+}
