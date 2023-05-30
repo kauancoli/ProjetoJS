@@ -1,77 +1,92 @@
-let xhr = new XMLHttpRequest();
+//Requisição de imagens
+const pageRandom = Math.floor(Math.random() * 99) + 1;
+const url = `https://picsum.photos/v2/list?page=${pageRandom}&limit=9`;
 
-let pageRandom = Math.floor(Math.random() * 99) + 1;
+fetch(url)
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("A requisição não pôde ser concluída.");
+    }
+  })
+  .then((data) => {
+    console.log(data);
 
-xhr.open("GET", `https://picsum.photos/v2/list?page=${pageRandom}&limit=10`);
+    const imageGrid = document.getElementById("image-grid");
 
-xhr.onload = function () {
-  if ((xhr.status = 200)) {
-    let response = JSON.parse(xhr.responseText);
-
-    let imageGrid = document.getElementById("image-grid");
-
-    for (let i = 0; i < response.length; i++) {
-      let imageBlock = document.createElement("div");
+    data.forEach((item) => {
+      const imageBlock = document.createElement("div");
       imageBlock.className = "col-md-4";
 
-      let imageElement = document.createElement("img");
+      const imageElement = document.createElement("img");
       imageElement.className = "img-fluid";
-      imageElement.src = response[i].download_url;
-      imageElement.alt = response[i].author;
-      imageElement.id = response[i].id;
+      imageElement.src = item.download_url;
+      imageElement.id = item.id;
+      imageElement.height = item.height;
+      imageElement.width = item.width;
+      imageElement.author = item.author;
 
-      let titleElement = document.createElement("h4");
-      titleElement.textContent = response[i].author;
+      const titleElement = document.createElement("h4");
+      titleElement.textContent = item.author;
 
       imageBlock.appendChild(imageElement).onclick = function () {
-        const imageUrl = response[i].download_url;
-        const authorName = response[i].author;
+        const imageUrl = item.download_url;
+        const imageId = item.id;
+        const imagewidth = item.width;
+        const imageHeight = item.height;
+        const authorName = item.author;
 
         const encodedUrl = encodeURIComponent(imageUrl);
+        const encodedwidth = encodeURIComponent(imagewidth);
+        const encodedHeight = encodeURIComponent(imageHeight);
+        const encodedId = encodeURIComponent(imageId);
         const encodedAuthor = encodeURIComponent(authorName);
 
-        window.location.href = `page2.html?url=${encodedUrl}&author=${encodedAuthor}`;
+        window.location.href = `page2.html?url=${encodedUrl}&author=${encodedAuthor}&id=${encodedId}&width=${encodedwidth}&height=${encodedHeight}`;
       };
+
       imageBlock.appendChild(titleElement);
       imageGrid.appendChild(imageBlock);
-    }
-  } else {
-    console.error("A requisição não pôde ser concluída.");
-  }
-};
+    });
+  })
+  .catch((error) => {
+    console.error(error.message);
+  });
 
-xhr.send();
-
+//Adicionar imagem
 function adicionarImagem(event) {
   event.preventDefault();
 
-  const imageUrl = document.getElementById('imageUrl').value;
-  const imageTitle = document.getElementById('imageTitle').value;
-  const imageDescription = document.getElementById('imageDescription').value;
+  const imageUrl = document.getElementById("imageUrl").value;
+  const imageTitle = document.getElementById("imageTitle").value;
+  const imageDescription = document.getElementById("imageDescription").value;
 
-  const gallery = document.querySelector('.gallery');
+  const gallery = document.querySelector(".gallery");
 
-  const imageContainer = document.createElement('div');
-  imageContainer.classList.add('image-container');
+  const imageContainer = document.createElement("div");
+  imageContainer.classList.add("image-container");
 
-  const newImage = document.createElement('img');
-  newImage.setAttribute('src', imageUrl);
-  newImage.setAttribute('alt', imageTitle);
+  const newImage = document.createElement("img");
+  newImage.setAttribute("src", imageUrl);
+  newImage.setAttribute("author", imageTitle);
 
-  const titleElement = document.createElement('h2');
+  const titleElement = document.createElement("h2");
   titleElement.textContent = imageTitle;
 
-  const descriptionElement = document.createElement('p');
+  const descriptionElement = document.createElement("p");
   descriptionElement.textContent = imageDescription;
 
-  const removeButton = document.createElement('button');
-  removeButton.textContent = 'Remover';
-  removeButton.addEventListener('click', function() {
+  const removeButton = document.createElement("button");
+  removeButton.textContent = "Remover";
+  removeButton.addEventListener("click", function () {
     gallery.removeChild(imageContainer);
-    // Remover também do LocalStorage
-    const storedImages = JSON.parse(localStorage.getItem('images')) || [];
-    const updatedImages = storedImages.filter(image => image.url !== imageUrl);
-    localStorage.setItem('images', JSON.stringify(updatedImages));
+
+    const storedImages = JSON.parse(localStorage.getItem("images")) || [];
+    const updatedImages = storedImages.filter(
+      (image) => image.url !== imageUrl
+    );
+    localStorage.setItem("images", JSON.stringify(updatedImages));
   });
 
   imageContainer.appendChild(newImage);
@@ -81,46 +96,48 @@ function adicionarImagem(event) {
 
   gallery.appendChild(imageContainer);
 
-  // Adicionar ao LocalStorage
-  const storedImages = JSON.parse(localStorage.getItem('images')) || [];
-  const newStoredImage = { url: imageUrl, title: imageTitle, description: imageDescription };
+  const storedImages = JSON.parse(localStorage.getItem("images")) || [];
+  const newStoredImage = {
+    url: imageUrl,
+    title: imageTitle,
+    description: imageDescription,
+  };
   storedImages.push(newStoredImage);
-  localStorage.setItem('images', JSON.stringify(storedImages));
+  localStorage.setItem("images", JSON.stringify(storedImages));
 
-  document.getElementById('imageUrl').value = '';
-  document.getElementById('imageTitle').value = '';
-  document.getElementById('imageDescription').value = '';
+  document.getElementById("imageUrl").value = "";
+  document.getElementById("imageTitle").value = "";
+  document.getElementById("imageDescription").value = "";
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  const addButton = document.getElementById('addButton');
-  addButton.addEventListener('click', adicionarImagem);
+document.addEventListener("DOMContentLoaded", function () {
+  const addButton = document.getElementById("addButton");
+  addButton.addEventListener("click", adicionarImagem);
 
-  // Recuperar imagens armazenadas no LocalStorage e exibir na galeria
-  const storedImages = JSON.parse(localStorage.getItem('images')) || [];
-  const gallery = document.querySelector('.gallery');
+  const storedImages = JSON.parse(localStorage.getItem("images")) || [];
+  const gallery = document.querySelector(".gallery");
 
-  storedImages.forEach(image => {
-    const imageContainer = document.createElement('div');
-    imageContainer.classList.add('image-container');
+  storedImages.forEach((image) => {
+    const imageContainer = document.createElement("div");
+    imageContainer.classList.add("image-container");
 
-    const newImage = document.createElement('img');
-    newImage.setAttribute('src', image.url);
-    newImage.setAttribute('alt', image.title);
+    const newImage = document.createElement("img");
+    newImage.setAttribute("src", image.url);
+    newImage.setAttribute("author", image.title);
 
-    const titleElement = document.createElement('h2');
+    const titleElement = document.createElement("h2");
     titleElement.textContent = image.title;
 
-    const descriptionElement = document.createElement('p');
+    const descriptionElement = document.createElement("p");
     descriptionElement.textContent = image.description;
 
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'Remover';
-    removeButton.addEventListener('click', function() {
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remover";
+    removeButton.addEventListener("click", function () {
       gallery.removeChild(imageContainer);
-      // Remover também do LocalStorage
-      const updatedImages = storedImages.filter(img => img.url !== image.url);
-      localStorage.setItem('images', JSON.stringify(updatedImages));
+
+      const updatedImages = storedImages.filter((img) => img.url !== image.url);
+      localStorage.setItem("images", JSON.stringify(updatedImages));
     });
 
     imageContainer.appendChild(newImage);

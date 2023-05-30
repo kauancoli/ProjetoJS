@@ -1,35 +1,57 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <title>Informações da Imagem</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
-  <title>Informações da Imagem</title>
-</head>
+  <body style="background-color: #070e1a; color: #e9e9e9">
+    <nav class="navbar navbar-dark bg-dark">
+      <span class="navbar-brand mb-0 h1">Informações da Imagem</span>
+    </nav>
+    <div style="padding: 30px">
+      <h2 style="margin-bottom: 2rem">Autor: <span id="author"></span></h2>
 
-<body style="background-color: #070e1a; color:#e9e9e9">
-  <nav class="navbar navbar-dark bg-dark ">
-    <span class="navbar-brand mb-0 h1">Informações da Imagem</span>
-  </nav>
-  <div style="padding: 30px;">
-    <h2 style="margin-bottom: 2rem;">Autor: <span id="author"></span></h2>
+      <h2 style="margin-bottom: 2rem">Id: <span id="id"></span></h2>
 
-    <img id="image" src="" alt="Imagem" width="680" height="480" />
-  </div>
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const imageUrl = decodeURIComponent(urlParams.get("url"));
-    const authorName = decodeURIComponent(urlParams.get("author"));
+      <h2 style="margin-bottom: 2rem">
+        Tamanho: <span id="width"></span>x<span id="height"></span>
+      </h2>
 
-    const imageElement = document.getElementById("image");
-    imageElement.src = imageUrl;
-    const authorElement = document.getElementById("author");
-    authorElement.textContent = authorName;
-  </script>
+      <img id="image" src="" alt="Imagem" />
+    </div>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const imageUrl = decodeURIComponent(urlParams.get("url"));
+      const imageId = decodeURIComponent(urlParams.get("id"));
+      const imageWidth = decodeURIComponent(urlParams.get("width"));
+      const imageHeight = decodeURIComponent(urlParams.get("height"));
+      const authorName = decodeURIComponent(urlParams.get("author"));
 
-</body>
+      const imageElement = document.getElementById("image");
+      imageElement.src = imageUrl;
+      imageElement.width = imageWidth / 4;
+      imageElement.height = imageHeight / 4;
 
+      const idElement = document.getElementById("id");
+      idElement.textContent = imageId;
+
+      const authorElement = document.getElementById("author");
+      authorElement.textContent = authorName;
+
+      const widthElement = document.getElementById("width");
+      widthElement.textContent = imageWidth;
+
+      const heightElement = document.getElementById("height");
+      heightElement.textContent = imageHeight;
+    </script>
+  </body>
 </html>
