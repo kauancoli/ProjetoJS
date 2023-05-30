@@ -54,7 +54,8 @@ fetch(url)
     console.error(error.message);
   });
 
-//Adicionar imagem
+xhr.send();
+
 function adicionarImagem(event) {
   event.preventDefault();
 
@@ -69,7 +70,7 @@ function adicionarImagem(event) {
 
   const newImage = document.createElement("img");
   newImage.setAttribute("src", imageUrl);
-  newImage.setAttribute("author", imageTitle);
+  newImage.setAttribute("alt", imageTitle);
 
   const titleElement = document.createElement("h2");
   titleElement.textContent = imageTitle;
@@ -81,7 +82,7 @@ function adicionarImagem(event) {
   removeButton.textContent = "Remover";
   removeButton.addEventListener("click", function () {
     gallery.removeChild(imageContainer);
-
+    // Remover também do LocalStorage
     const storedImages = JSON.parse(localStorage.getItem("images")) || [];
     const updatedImages = storedImages.filter(
       (image) => image.url !== imageUrl
@@ -94,8 +95,20 @@ function adicionarImagem(event) {
   imageContainer.appendChild(descriptionElement);
   imageContainer.appendChild(removeButton);
 
+  if (gallery.id === "page4Gallery") {
+    const editButton = document.createElement("button");
+    editButton.textContent = "Editar";
+    editButton.addEventListener("click", function () {
+      titleElement.contentEditable = true;
+      descriptionElement.contentEditable = true;
+      titleElement.focus();
+    });
+    imageContainer.appendChild(editButton);
+  }
+
   gallery.appendChild(imageContainer);
 
+  // Adicionar ao LocalStorage
   const storedImages = JSON.parse(localStorage.getItem("images")) || [];
   const newStoredImage = {
     url: imageUrl,
@@ -114,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const addButton = document.getElementById("addButton");
   addButton.addEventListener("click", adicionarImagem);
 
+  // Recuperar imagens armazenadas no LocalStorage e exibir na galeria
   const storedImages = JSON.parse(localStorage.getItem("images")) || [];
   const gallery = document.querySelector(".gallery");
 
@@ -135,10 +149,21 @@ document.addEventListener("DOMContentLoaded", function () {
     removeButton.textContent = "Remover";
     removeButton.addEventListener("click", function () {
       gallery.removeChild(imageContainer);
-
+      // Remover também do LocalStorage
       const updatedImages = storedImages.filter((img) => img.url !== image.url);
       localStorage.setItem("images", JSON.stringify(updatedImages));
     });
+
+    if (gallery.id === "page4Gallery") {
+      const editButton = document.createElement("button");
+      editButton.textContent = "Editar";
+      editButton.addEventListener("click", function () {
+        titleElement.contentEditable = true;
+        descriptionElement.contentEditable = true;
+        titleElement.focus();
+      });
+      imageContainer.appendChild(editButton);
+    }
 
     imageContainer.appendChild(newImage);
     imageContainer.appendChild(titleElement);
