@@ -2,7 +2,7 @@ let xhr = new XMLHttpRequest();
 
 let pageRandom = Math.floor(Math.random() * 99) + 1;
 
-xhr.open("GET", `https://picsum.photos/v2/list?page=${pageRandom}&limit=9`);
+xhr.open("GET", `https://picsum.photos/v2/list?page=${pageRandom}&limit=10`);
 
 xhr.onload = function () {
   if ((xhr.status = 200)) {
