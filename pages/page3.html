@@ -27,11 +27,17 @@
 
   <h1>Galeria de Imagens - Página 3</h1>
 
-  <form id="imageForm">
-    <input type="text" id="imageUrl" placeholder="URL da imagem" required>
-    <input type="text" id="imageTitle" placeholder="Título da imagem" required>
-    <input type="text" id="imageDescription" placeholder="Descrição da imagem" required>
-    <button type="submit" id="addButton">Adicionar</button>
+  <form>
+    <label for="imageUrl">URL da Imagem:</label>
+    <input type="text" id="imageUrl" required>
+
+    <label for="imageTitle">Título da Imagem:</label>
+    <input type="text" id="imageTitle" required>
+
+    <label for="imageDescription">Descrição da Imagem:</label>
+    <input type="text" id="imageDescription" required>
+
+    <button id="addButton">Adicionar Imagem</button>
   </form>
 
   <div class="gallery"></div>

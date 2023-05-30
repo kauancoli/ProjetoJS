@@ -1,12 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="main.js"></script>
+    <title>Projeto SI - Página 4</title>
+  </head>
+
 <body>
-    
+
+    <ul>
+        <li><a href="index.html">Página 1</a></li>
+        <li><a href="page2.html">Página 2</a></li>
+        <li><a href="page3.html">Página 3</a></li>
+        <li>Página 4</li>
+        <li><a href="page5.html">Página 5</a></li>
+      </ul>
+
+  <h1>Galeria de Imagens - Página 4</h1>
+
+  <form>
+    <label for="imageUrl">URL da Imagem:</label>
+    <input type="text" id="imageUrl" required>
+
+    <label for="imageTitle">Título da Imagem:</label>
+    <input type="text" id="imageTitle" required>
+
+    <label for="imageDescription">Descrição da Imagem:</label>
+    <input type="text" id="imageDescription" required>
+
+    <button type="submit" id="addButton">Adicionar Imagem</button>
+  </form>
+
+  <div id="page4Gallery" class="gallery"></div>
 </body>
+
 </html>
