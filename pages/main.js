@@ -41,3 +41,93 @@ xhr.onload = function () {
 };
 
 xhr.send();
+
+function adicionarImagem(event) {
+  event.preventDefault();
+
+  const imageUrl = document.getElementById('imageUrl').value;
+  const imageTitle = document.getElementById('imageTitle').value;
+  const imageDescription = document.getElementById('imageDescription').value;
+
+  const gallery = document.querySelector('.gallery');
+
+  const imageContainer = document.createElement('div');
+  imageContainer.classList.add('image-container');
+
+  const newImage = document.createElement('img');
+  newImage.setAttribute('src', imageUrl);
+  newImage.setAttribute('alt', imageTitle);
+
+  const titleElement = document.createElement('h2');
+  titleElement.textContent = imageTitle;
+
+  const descriptionElement = document.createElement('p');
+  descriptionElement.textContent = imageDescription;
+
+  const removeButton = document.createElement('button');
+  removeButton.textContent = 'Remover';
+  removeButton.addEventListener('click', function() {
+    gallery.removeChild(imageContainer);
+    // Remover também do LocalStorage
+    const storedImages = JSON.parse(localStorage.getItem('images')) || [];
+    const updatedImages = storedImages.filter(image => image.url !== imageUrl);
+    localStorage.setItem('images', JSON.stringify(updatedImages));
+  });
+
+  imageContainer.appendChild(newImage);
+  imageContainer.appendChild(titleElement);
+  imageContainer.appendChild(descriptionElement);
+  imageContainer.appendChild(removeButton);
+
+  gallery.appendChild(imageContainer);
+
+  // Adicionar ao LocalStorage
+  const storedImages = JSON.parse(localStorage.getItem('images')) || [];
+  const newStoredImage = { url: imageUrl, title: imageTitle, description: imageDescription };
+  storedImages.push(newStoredImage);
+  localStorage.setItem('images', JSON.stringify(storedImages));
+
+  document.getElementById('imageUrl').value = '';
+  document.getElementById('imageTitle').value = '';
+  document.getElementById('imageDescription').value = '';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const addButton = document.getElementById('addButton');
+  addButton.addEventListener('click', adicionarImagem);
+
+  // Recuperar imagens armazenadas no LocalStorage e exibir na galeria
+  const storedImages = JSON.parse(localStorage.getItem('images')) || [];
+  const gallery = document.querySelector('.gallery');
+
+  storedImages.forEach(image => {
+    const imageContainer = document.createElement('div');
+    imageContainer.classList.add('image-container');
+
+    const newImage = document.createElement('img');
+    newImage.setAttribute('src', image.url);
+    newImage.setAttribute('alt', image.title);
+
+    const titleElement = document.createElement('h2');
+    titleElement.textContent = image.title;
+
+    const descriptionElement = document.createElement('p');
+    descriptionElement.textContent = image.description;
+
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'Remover';
+    removeButton.addEventListener('click', function() {
+      gallery.removeChild(imageContainer);
+      // Remover também do LocalStorage
+      const updatedImages = storedImages.filter(img => img.url !== image.url);
+      localStorage.setItem('images', JSON.stringify(updatedImages));
+    });
+
+    imageContainer.appendChild(newImage);
+    imageContainer.appendChild(titleElement);
+    imageContainer.appendChild(descriptionElement);
+    imageContainer.appendChild(removeButton);
+
+    gallery.appendChild(imageContainer);
+  });
+});
