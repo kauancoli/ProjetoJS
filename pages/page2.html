@@ -10,6 +10,7 @@
       integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="style.css" />
     <title>Informações da Imagem</title>
   </head>
 
@@ -17,16 +18,28 @@
     <nav class="navbar navbar-dark bg-dark">
       <span class="navbar-brand mb-0 h1">Informações da Imagem</span>
     </nav>
-    <div style="padding: 30px">
-      <h2 style="margin-bottom: 2rem">Autor: <span id="author"></span></h2>
+    <div
+      style="
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 2rem;
+      "
+    >
+      <button id="backButton">Voltar</button>
 
-      <h2 style="margin-bottom: 2rem">Id: <span id="id"></span></h2>
+      <div style="border: 3px solid #b3cfff; border-radius: 8px">
+        <img id="image" src="" alt="Imagem" style="user-select: none" />
+      </div>
 
-      <h2 style="margin-bottom: 2rem">
-        Tamanho: <span id="width"></span>x<span id="height"></span>
-      </h2>
+      <div style="display: flex; gap: 5rem">
+        <h4>Autor: <span id="author"></span></h4>
 
-      <img id="image" src="" alt="Imagem" />
+        <h4>Id: <span id="id"></span></h4>
+
+        <h4>Tamanho: <span id="width"></span>x<span id="height"></span></h4>
+      </div>
     </div>
     <script>
       const urlParams = new URLSearchParams(window.location.search);
@@ -52,6 +65,12 @@
 
       const heightElement = document.getElementById("height");
       heightElement.textContent = imageHeight;
+
+      const backButton = document.getElementById("backButton");
+      backButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        window.location.href = "index.html";
+      });
     </script>
   </body>
 </html>

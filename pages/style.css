@@ -1,3 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: "Poppins", sans-serif;
+}
+
 #image-grid .col-md-4 {
   margin-bottom: 20px;
 }
@@ -17,6 +27,22 @@
   opacity: 0.9;
 }
 
-h4 {
-  margin-top: 1rem;
+#backButton {
+  padding: 8px 25px;
+
+  border: 1px solid #000;
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  text-transform: uppercase;
+  font-weight: 700;
+
+  user-select: none;
+}
+
+#backButton:hover {
+  opacity: 0.8;
+
+  transform: scale(1.01);
 }
