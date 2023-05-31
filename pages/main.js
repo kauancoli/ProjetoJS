@@ -263,3 +263,63 @@ document.addEventListener("DOMContentLoaded", function () {
     gallery.appendChild(imageContainer);
   });
 });
+
+// pagina 5
+
+fetch(url)
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      throw new Error("A requisição não pôde ser concluída.");
+    }
+  })
+  .then((data) => {
+    console.log(data);
+
+    const imageGridFull = document.getElementById("image-grid-full");
+
+    data.forEach((item) => {
+      const imageBlock = document.createElement("div");
+      imageBlock.className = "col-md-4";
+
+      const imageElement = document.createElement("img");
+      imageElement.className = "img-fluid";
+      imageElement.src = item.download_url;
+      imageElement.id = item.id;
+      imageElement.height = item.height;
+      imageElement.width = item.width;
+      imageElement.author = item.author;
+
+      const titleElement = document.createElement("h4");
+      titleElement.textContent = item.author;
+
+      // Adiciona um evento de clique em cada elemento de imagem criado
+      imageElement.addEventListener("click", () => {
+        expandImage(item.download_url);
+      });
+
+      imageBlock.appendChild(imageElement);
+      imageBlock.appendChild(titleElement);
+      imageGridFull.appendChild(imageBlock);
+    });
+  })
+  .catch((error) => {
+    console.error(error.message);
+  });
+
+function expandImage(imageUrl) {
+  const expandedImageContainer = document.querySelector(".expanded-image");
+
+  const expandedImageElement = document.createElement("img");
+  expandedImageElement.src = imageUrl;
+
+  expandedImageContainer.appendChild(expandedImageElement);
+
+  expandedImageContainer.classList.add("active");
+
+  expandedImageElement.addEventListener("click", () => {
+    expandedImageContainer.innerHTML = "";
+    expandedImageContainer.classList.remove("active");
+  });
+}
