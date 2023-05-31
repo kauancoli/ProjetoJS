@@ -14,6 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Projeto SI - Página 4</title>
   </head>
+
   <body style="background-color: #070e1a; color: #e9e9e9">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="index.html">Home</a>
@@ -31,10 +32,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="page3.html">Adicionar Imagens</a>
+            <a class="nav-link" href="page3.html">Adicionar imagem</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="page4.html">Editar Imagens</a>
+            <a class="nav-link" href="page4.html">Editar imagem</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="page5.html">Página 5</a>
@@ -45,21 +46,27 @@
         </ul>
       </div>
     </nav>
+    <div class="col-md-auto">
+      <h1 style="padding: 30px">Editar imagem</h1>
+    </div>
+    <div class="col-md-auto">
+      <form>
+        <label for="imageUrl">URL da Imagem:</label>
+        <input type="text" id="imageUrl" required />
+      </form>
+      <form>
+        <label for="imageTitle">Título da Imagem:</label>
+        <input type="text" id="imageTitle" required />
+      </form>
+      <form>
+        <label for="imageDescription">Descrição da Imagem:</label>
+        <input type="text" id="imageDescription" required />
+      </form>
 
-    <h1>Editar Informações da Imagem</h1>
-
-    <form style="display: none">
-      <label for="imageUrl">URL da Imagem:</label>
-      <input type="text" id="imageUrl" required />
-
-      <label for="imageTitle">Título da Imagem:</label>
-      <input type="text" id="imageTitle" required />
-
-      <label for="imageDescription">Descrição da Imagem:</label>
-      <input type="text" id="imageDescription" required />
-
-      <button type="submit" id="addButton">Adicionar Imagem</button>
-    </form>
+      <button style="margin: 25px 35px" type="submit" id="addButton">
+        Editar imagem
+      </button>
+    </div>
 
     <div id="page4Gallery" class="gallery"></div>
     <script src="main.js"></script>
