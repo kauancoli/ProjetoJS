@@ -47,6 +47,21 @@ button :hover {
   transform: scale(1.01);
 }
 
-label{ 
+label {
   margin: 15px 35px;
+}
+
+.gallery {
+  padding: 30px;
+}
+
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.image-container button {
+  display: flex;
 }

@@ -245,6 +245,9 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.setItem("page4Images", JSON.stringify(updatedImages));
     });
 
+    imageContainer.appendChild(newImage);
+    imageContainer.appendChild(titleElement);
+    imageContainer.appendChild(descriptionElement);
     if (gallery.id === "page4Gallery") {
       const editButton = document.createElement("button");
       editButton.textContent = "Editar";
@@ -255,10 +258,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       imageContainer.appendChild(editButton);
     }
-
-    imageContainer.appendChild(newImage);
-    imageContainer.appendChild(titleElement);
-    imageContainer.appendChild(descriptionElement);
     imageContainer.appendChild(removeButton);
 
     gallery.appendChild(imageContainer);
