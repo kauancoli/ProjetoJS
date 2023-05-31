@@ -109,10 +109,20 @@ function adicionarImagem(event) {
   document.getElementById("imageTitle").value = "";
   document.getElementById("imageDescription").value = "";
 }
-
 document.addEventListener("DOMContentLoaded", function () {
   const addButton = document.getElementById("addButton");
-  addButton.addEventListener("click", adicionarImagem);
+  const imageUrlInput = document.getElementById("imageUrl");
+  const imageTitleInput = document.getElementById("imageTitle");
+
+  function checkInputs() {
+    const imageUrl = imageUrlInput.value.trim();
+    const imageTitle = imageTitleInput.value.trim();
+
+    addButton.disabled = imageUrl === "" || imageTitle === "";
+  }
+
+  imageUrlInput.addEventListener("input", checkInputs);
+  imageTitleInput.addEventListener("input", checkInputs);
 
   const storedImages = JSON.parse(localStorage.getItem("images")) || [];
   const gallery = document.querySelector(".gallery");
@@ -188,17 +198,6 @@ function adicionarImagem(event) {
   imageContainer.appendChild(titleElement);
   imageContainer.appendChild(descriptionElement);
   imageContainer.appendChild(removeButton);
-
-  if (gallery.id === "page4Gallery") {
-    const editButton = document.createElement("button");
-    editButton.textContent = "Editar";
-    editButton.addEventListener("click", function () {
-      titleElement.contentEditable = true;
-      descriptionElement.contentEditable = true;
-      titleElement.focus();
-    });
-    imageContainer.appendChild(editButton);
-  }
 
   gallery.appendChild(imageContainer);
 
